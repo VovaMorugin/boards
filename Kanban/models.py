@@ -1,5 +1,6 @@
 from django.db import models
 from django.contrib.auth import get_user_model
+from django.db.models.deletion import CASCADE
 # Create your models here.
 
 User = get_user_model()
@@ -15,6 +16,20 @@ class Board(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     updated = models.DateTimeField(auto_now=True)
 
+
+    def __str__(self):
+        return self.title
+
+class List(models.Model):
+    class Meta:
+        db_table = 'lists'
+        verbose_name = 'List'
+        verbose_name_plural = 'Lists'
+    
+    title = models.CharField(max_length=100, null=False, blank=False)
+    board = models.ForeignKey(Board, on_delete=models.CASCADE)
+    is_active = models.BooleanField(default=True)
+    created = models.DateTimeField(auto_now_add=True)
 
     def __str__(self):
         return self.title
