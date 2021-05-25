@@ -46,8 +46,8 @@ class Card(models.Model):
     list = models.ForeignKey(List, on_delete=models.CASCADE)
     is_active = models.BooleanField(default=True)
     title = models.CharField(max_length=100, null=False, blank=False)
-    description = models.TextField()
-    due_day = DateTimeField()
+    description = models.TextField(null=True, blank=True)
+    due_day = DateTimeField(null=True, blank=True)
     created = models.DateTimeField(auto_now_add=True)
 
 
