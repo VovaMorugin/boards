@@ -12,7 +12,7 @@ class Board(models.Model):
         db_table = 'boards'
         verbose_name = 'Board'
         verbose_name_plural = 'Boards'
-
+    user = models.ForeignKey(User, on_delete=models.CASCADE)
     title = models.CharField(max_length=100, null=False, blank=False)
     is_active = models.BooleanField(default=True)
     created = models.DateTimeField(auto_now_add=True)
