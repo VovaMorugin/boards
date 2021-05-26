@@ -8,7 +8,7 @@ class BoardAdmin(admin.ModelAdmin):
 
 
 class ListAdmin(admin.ModelAdmin):
-    list_display = ('title', 'board', 'is_active', 'created')
+    list_display = ('id', 'title', 'board', 'is_active', 'created')
 
 
 class CardAdmin(admin.ModelAdmin):

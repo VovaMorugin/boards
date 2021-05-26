@@ -1,0 +1,58 @@
+{%load static %}
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" type="text/css" href="{% static 'css/kanban.css' %}">
+    <title>Document</title>
+</head>
+
+<body>
+    <section class="board-info-bar">
+        <div class="boards-menu">
+
+            <button class="boards-btn btn"><i class="fab fa-trello boards-btn-icon"></i>Boards</button>
+
+        </div>
+
+
+    </section>
+
+    <section class="lists-container">
+        {% for list in lists%}
+        <div class="list">
+
+
+            <h3 class="list-title">{{list.title}}</h3>
+
+            <ul class="list-items">
+                {% for k, v in cards.items %}
+                {% if k == list.id %}
+                {% for card in v%}
+                <li>{{card.title}}</li>
+                {% endfor %}
+                {%endif%}
+                {% endfor %}
+
+
+            </ul>
+           
+            <button class="add-card-btn btn">Add a card</button>
+
+        </div>
+        {% endfor %}
+        <button class="add-list-btn btn">Add a list</button>
+        </div>
+
+
+
+
+
+    </section>
+    <!-- End of lists container -->
+</body>
+
+</html>

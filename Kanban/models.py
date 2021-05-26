@@ -54,6 +54,7 @@ class Card(models.Model):
 def __str__(self):
     return self.title
 
+
 class Comment(models.Model):
     class Meta:
         db_table = 'comments'
@@ -64,5 +65,6 @@ class Comment(models.Model):
     created = models.DateTimeField(auto_now_add=True)
     text = models.TextField(null=False, blank=False)
 
+
 def __str__(self):
-    return self.card.title   
+    return self.card.title
