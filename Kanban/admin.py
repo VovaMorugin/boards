@@ -4,7 +4,7 @@ from .models import *
 
 
 class BoardAdmin(admin.ModelAdmin):
-    list_display = ('title', 'is_active', 'created')
+    list_display = ('id', 'title', 'is_active', 'created')
 
 
 class ListAdmin(admin.ModelAdmin):
@@ -12,10 +12,10 @@ class ListAdmin(admin.ModelAdmin):
 
 
 class CardAdmin(admin.ModelAdmin):
-    list_display = ('title', 'list', 'is_active', 'created',  'due_day')
+    list_display = ('id', 'title', 'list', 'is_active', 'created',  'due_day')
 
 class CommentAdmin(admin.ModelAdmin):
-    list_display = ('card', 'text', 'created')
+    list_display = ('id', 'card', 'text', 'created')
 
 admin.site.register(Board, BoardAdmin)
 admin.site.register(List, ListAdmin)

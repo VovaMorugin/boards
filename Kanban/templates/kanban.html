@@ -1,4 +1,5 @@
 {%load static %}
+{% load crispy_forms_tags %}
 <!DOCTYPE html>
 <html lang="en">
 
@@ -6,15 +7,22 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
     <link rel="stylesheet" type="text/css" href="{% static 'css/kanban.css' %}">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
     <title>Document</title>
+
 </head>
 
 <body>
     <section class="board-info-bar">
         <div class="boards-menu">
 
-            <button class="boards-btn btn"><i class="fab fa-trello boards-btn-icon"></i>Boards</button>
+            <a class="boards-btn btn" data-toggle="modal" data-target="#myModalCard">
+                <i class="fab fa-trello boards-btn-icon">
+                </i> Add Card
+            </a>
 
         </div>
 
@@ -32,27 +40,65 @@
                 {% for k, v in cards.items %}
                 {% if k == list.id %}
                 {% for card in v%}
-                <li>{{card.title}}</li>
+                <a style="text-decoration:none" href="/card_info/{{card.id}}" data-toggle="modal"
+                    data-target="#card_info">
+                    <li>{{card.title}}
+
+                    </li>
+                </a>
                 {% endfor %}
                 {%endif%}
                 {% endfor %}
 
-
             </ul>
-           
-            <button class="add-card-btn btn">Add a card</button>
+
 
         </div>
         {% endfor %}
-        <button class="add-list-btn btn">Add a list</button>
-        </div>
-
-
-
-
 
     </section>
     <!-- End of lists container -->
+    <!-- Modal -->
+    <div class="modal fade" id="myModalCard" role="dialog">
+        <div class="modal-dialog">
+
+            <!-- Modal content-->
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h4 class="modal-title">Add new card</h4>
+                </div>
+                <div class="modal-body">
+                    <form action='.' method='POST'>
+                        {% csrf_token %}
+                        {{card_form|crispy}}
+                        <input type='submit' value='Save' />
+                    </form>
+                </div>
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="modal fade" id="card_info" role="dialog">
+        <div class="modal-dialog">
+
+            <div class="modal-content">
+
+                <div class="modal-body">
+
+                </div>
+
+            </div>
+
+        </div>
+    </div>
+
+
+
+
 </body>
 
 </html>

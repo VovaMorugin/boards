@@ -43,7 +43,7 @@ class Card(models.Model):
         verbose_name = 'card'
         verbose_name_plural = 'cards'
 
-    list = models.ForeignKey(List, on_delete=models.CASCADE)
+    list = models.ForeignKey(List, on_delete=models.CASCADE, verbose_name='List')
     is_active = models.BooleanField(default=True)
     title = models.CharField(max_length=100, null=False, blank=False)
     description = models.TextField(null=True, blank=True)

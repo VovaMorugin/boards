@@ -1,8 +1,8 @@
 from django.contrib.auth import login
 from django.shortcuts import redirect, render
-from django.urls import reverse
 from Kanban.forms import CustomUserCreationForm
 from .models import *
+from .forms import CardForm, BoardForm, ListForm
 
 
 def register(request):
@@ -25,10 +25,14 @@ def main(request):
     else:
         return redirect("login")
 
+
 def kanban(request):
 
     id = request.GET.get('id', 1)
     boards = Board.objects.filter(user=request.user)
+    card_form = CardForm(request.POST or None)
+    if card_form.is_valid():
+        card_form.save()
 
     active_board = boards.get(id=id)
     lists = List.objects.filter(board=active_board)
@@ -44,7 +48,29 @@ def kanban(request):
     return render(request, 'kanban.html', {
         'boards': boards,
         'lists': lists,
-        'cards': cards_in_lists
+        'cards': cards_in_lists,
+        'card_form': card_form
     })
 
-    
+
+def card_create_view(request):
+    form = CardForm(request.POST or None)
+    if form.is_valid():
+        form.save()
+
+    context = {
+        'form': form,
+    }
+
+    return render(request, 'card_create.html', context)
+
+
+def card_info(request, card_id):
+  
+    current_card = Card.objects.get(id = card_id)
+    comments = Comment.objects.filter(card = current_card)
+    context = {
+        'current_card': current_card,
+        'comments': comments
+    }
+    return render(request, 'card_info.html', context)
