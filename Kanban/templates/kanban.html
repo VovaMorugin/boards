@@ -19,9 +19,14 @@
 </head>
 
 <body>
+    <a href="{% url 'logout' %}">Log Out</a>
     <section class="board-info-bar">
         <div class="boards-menu">
-
+ 
+            <a class="boards-btn btn" href="/add_list/">
+                <i class="fab fa-trello boards-btn-icon">
+                </i> Add List
+            </a>
             <a class="boards-btn btn" data-toggle="modal" data-target="#myModalCard">
                 <i class="fab fa-trello boards-btn-icon">
                 </i> Add Card
@@ -34,7 +39,12 @@
         {% for list in lists%}
         <div class="list">
 
-            <h3 class="list-title">{{list.title}}</h3>
+            <h3 class="list-title">{{list.title}} 
+                <a href="?del_list_id={{list.id}}">
+                    <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+                </a>
+
+            </h3>
 
             <ul class="list-items">
                 {% for k, v in cards.items %}
@@ -59,7 +69,6 @@
                     <td>
                         <a href="?del_card_id={{card.id}}">
                             <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
-
                         </a>
                     </td>
                 </tr>
@@ -88,39 +97,6 @@
                     <form action='.' method='POST'>
                         {% csrf_token %}
                         {{card_form|crispy}}
-                        <input type='submit' value='Save' />
-
-                </div>
-
-            </div>
-        </div>
-    </div>
-
-
-    <div class="modal fade" id="card_info" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-                <div class="modal-header">
-                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
-                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                </div>
-
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                    <button type="button" class="btn btn-primary">Save changes</button>
-                </div>
-            </div>
-        </div>
-    </div>
-
-    <div class="modal fade" id="update_card" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
-        <div class="modal-dialog">
-            <div class="modal-content">
-
-                <div class="modal-body">
-                    <form action='.' method='POST'>
-                        {% csrf_token %}
-                        {{card_update_form|crispy}}
                         <input type='submit' value='Save' />
 
                 </div>

@@ -29,20 +29,34 @@ def main(request):
 
 def kanban(request):
     id = request.GET.get('id', 1)
-    boards = Board.objects.filter(user=request.user)
-
+    board = Board.objects.filter(user=request.user).first()
+    if not board:
+        board = Board.objects.create(user=request.user, title="Board")
     card_form = CardForm(request.POST or None)
-    if card_form.is_valid():
-        card_form.save()
-        return redirect("kanban")
+    list_form = ListForm(request.POST or None)
+
+    if request.method == 'POST':
+
+        if card_form.is_valid():
+            card_form.save()
+            return redirect("kanban")
+
+
 
     if request.method == 'GET' and 'del_card_id' in request.GET:
         card_id = request.GET.get('del_card_id', None)
         Card.objects.get(id=card_id).delete()
         return redirect("kanban")
 
-    active_board = boards.get(id=id)
-    lists = List.objects.filter(board=active_board)
+
+    if request.method == 'GET' and 'del_list_id' in request.GET:
+        list_id = request.GET.get('del_list_id', None)
+        List.objects.get(id=list_id).delete()
+        return redirect("kanban")
+    
+
+
+    lists = List.objects.filter(board=board)
 
     cards_in_lists = {}
     for card in Card.objects.all():
@@ -52,10 +66,11 @@ def kanban(request):
             cards_in_lists[card.list.id] = [card]
 
     return render(request, 'kanban.html', {
-        'boards': boards,
+        'boards': board,
         'lists': lists,
         'cards': cards_in_lists,
         'card_form': card_form,
+        'list_form': list_form
     })
 
 
@@ -84,3 +99,16 @@ def card_update(request, card_id):
         'id': card_id
     }
     return render(request, 'card_update.html', context)
+
+
+def add_list(request):
+    if request.method == 'POST':
+        list_form = ListForm(request.POST)
+        if list_form.is_valid():
+            list_form.save()
+            return redirect("kanban")
+
+    context = {
+        'list_form': ListForm()
+    }
+    return render(request, "add_list.html", context)

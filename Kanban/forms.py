@@ -25,7 +25,7 @@ class ListForm(forms.ModelForm):
     class Meta:
         model = List
         fields = [
-
+            
             'title',
             'board',
         ]
