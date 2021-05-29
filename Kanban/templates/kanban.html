@@ -7,10 +7,13 @@
     <meta charset="UTF-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/3.4.1/css/bootstrap.min.css"
+        integrity="sha384-HSMxcRTRxnN+Bdg0JdbxYKrThecOKuH5zCYotlSAcp1+c8xmyTe9GYg1l9a69psu" crossorigin="anonymous">
+
     <link rel="stylesheet" type="text/css" href="{% static 'css/kanban.css' %}">
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.5.1/jquery.min.js"></script>
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.4.1/js/bootstrap.min.js"></script>
+    <script src="{% static 'js/kanban.js' %}"></script>
     <title>Document</title>
 
 </head>
@@ -25,14 +28,11 @@
             </a>
 
         </div>
-
-
     </section>
 
     <section class="lists-container">
         {% for list in lists%}
         <div class="list">
-
 
             <h3 class="list-title">{{list.title}}</h3>
 
@@ -40,12 +40,31 @@
                 {% for k, v in cards.items %}
                 {% if k == list.id %}
                 {% for card in v%}
-                <a style="text-decoration:none" href="/card_info/{{card.id}}" data-toggle="modal"
-                    data-target="#card_info">
-                    <li>{{card.title}}
+                <tr>
+                    <td>
+                        <a style="text-decoration:none" href="/card_info/{{card.id}}" data-toggle="modal"
+                            data-target="#card_info">
+                            <li>
 
-                    </li>
-                </a>
+                                {{card.title}}<br><br>
+
+                        </a>
+                    </td>
+                    <td>
+                        <a href="/card_update/{{card.id}}">
+                            <span class="glyphicon glyphicon-edit" aria-hidden="true"></span>
+                        </a>
+
+                    </td>
+                    <td>
+                        <a href="?del_card_id={{card.id}}">
+                            <span class="glyphicon glyphicon-remove" aria-hidden="true"></span>
+
+                        </a>
+                    </td>
+                </tr>
+                </li>
+
                 {% endfor %}
                 {%endif%}
                 {% endfor %}
@@ -57,47 +76,58 @@
         {% endfor %}
 
     </section>
-    <!-- End of lists container -->
-    <!-- Modal -->
-    <div class="modal fade" id="myModalCard" role="dialog">
-        <div class="modal-dialog">
 
-            <!-- Modal content-->
+    <div class="modal fade" id="myModalCard" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
             <div class="modal-content">
                 <div class="modal-header">
-                    <h4 class="modal-title">Add new card</h4>
+                    <h5 class="modal-title" id="exampleModalLabel">Add new card</h5>
+
                 </div>
                 <div class="modal-body">
                     <form action='.' method='POST'>
                         {% csrf_token %}
                         {{card_form|crispy}}
                         <input type='submit' value='Save' />
-                    </form>
-                </div>
-                <div class="modal-footer">
-                    <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
-                </div>
-            </div>
 
+                </div>
+
+            </div>
         </div>
     </div>
 
-    <div class="modal fade" id="card_info" role="dialog">
-        <div class="modal-dialog">
 
+    <div class="modal fade" id="card_info" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
+            <div class="modal-content">
+                <div class="modal-header">
+                    <h5 class="modal-title" id="exampleModalLabel">Modal title</h5>
+                    <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                </div>
+
+                <div class="modal-footer">
+                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                    <button type="button" class="btn btn-primary">Save changes</button>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="modal fade" id="update_card" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+        <div class="modal-dialog">
             <div class="modal-content">
 
                 <div class="modal-body">
+                    <form action='.' method='POST'>
+                        {% csrf_token %}
+                        {{card_update_form|crispy}}
+                        <input type='submit' value='Save' />
 
                 </div>
 
             </div>
-
         </div>
     </div>
-
-
-
 
 </body>
 

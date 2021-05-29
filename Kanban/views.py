@@ -6,6 +6,7 @@ from .forms import CardForm, BoardForm, ListForm
 
 
 def register(request):
+
     if request.method == "GET":
         return render(
             request, "registration/register.html",
@@ -27,12 +28,18 @@ def main(request):
 
 
 def kanban(request):
-
     id = request.GET.get('id', 1)
     boards = Board.objects.filter(user=request.user)
+
     card_form = CardForm(request.POST or None)
     if card_form.is_valid():
         card_form.save()
+        return redirect("kanban")
+
+    if request.method == 'GET' and 'del_card_id' in request.GET:
+        card_id = request.GET.get('del_card_id', None)
+        Card.objects.get(id=card_id).delete()
+        return redirect("kanban")
 
     active_board = boards.get(id=id)
     lists = List.objects.filter(board=active_board)
@@ -43,34 +50,37 @@ def kanban(request):
             cards_in_lists[card.list.id].append(card)
         else:
             cards_in_lists[card.list.id] = [card]
-    print(cards_in_lists[1])
 
     return render(request, 'kanban.html', {
         'boards': boards,
         'lists': lists,
         'cards': cards_in_lists,
-        'card_form': card_form
+        'card_form': card_form,
     })
 
 
-def card_create_view(request):
-    form = CardForm(request.POST or None)
-    if form.is_valid():
-        form.save()
-
-    context = {
-        'form': form,
-    }
-
-    return render(request, 'card_create.html', context)
-
-
 def card_info(request, card_id):
-  
-    current_card = Card.objects.get(id = card_id)
-    comments = Comment.objects.filter(card = current_card)
+
+    current_card = Card.objects.get(id=card_id)
+    comments = Comment.objects.filter(card=current_card)
     context = {
         'current_card': current_card,
         'comments': comments
     }
     return render(request, 'card_info.html', context)
+
+
+def card_update(request, card_id):
+    current_card = Card.objects.get(id=card_id)
+    update_form = CardForm(instance=current_card)
+    if request.method == 'POST':
+        update_form = CardForm(request.POST, instance=current_card)
+        if update_form.is_valid():
+            update_form.save()
+            return redirect("kanban")
+
+    context = {
+        'update_form': update_form,
+        'id': card_id
+    }
+    return render(request, 'card_update.html', context)
