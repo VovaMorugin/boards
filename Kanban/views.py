@@ -18,43 +18,46 @@ def register(request):
             user = form.save()
             login(request, user)
             return redirect("kanban")
+        else:
+            return redirect("register")
 
 
 def main(request):
     if request.user.is_authenticated:
         return redirect("kanban")
     else:
-        return redirect("login")
+        return redirect("register")
 
 
 def kanban(request):
+    if not request.user.is_authenticated:
+        return redirect("register")
     id = request.GET.get('id', 1)
     board = Board.objects.filter(user=request.user).first()
     if not board:
         board = Board.objects.create(user=request.user, title="Board")
+
+
+
     card_form = CardForm(request.POST or None)
-    list_form = ListForm(request.POST or None)
+    card_form.fields['list'].queryset = List.objects.filter(user = request.user)
+
+    
 
     if request.method == 'POST':
-
         if card_form.is_valid():
             card_form.save()
             return redirect("kanban")
-
-
 
     if request.method == 'GET' and 'del_card_id' in request.GET:
         card_id = request.GET.get('del_card_id', None)
         Card.objects.get(id=card_id).delete()
         return redirect("kanban")
 
-
     if request.method == 'GET' and 'del_list_id' in request.GET:
         list_id = request.GET.get('del_list_id', None)
         List.objects.get(id=list_id).delete()
         return redirect("kanban")
-    
-
 
     lists = List.objects.filter(board=board)
 
@@ -70,7 +73,7 @@ def kanban(request):
         'lists': lists,
         'cards': cards_in_lists,
         'card_form': card_form,
-        'list_form': list_form
+
     })
 
 
@@ -102,13 +105,22 @@ def card_update(request, card_id):
 
 
 def add_list(request):
+
+    initial_data = {
+        'user':request.user,
+    }
+    list_form = ListForm(request.POST or None, initial=initial_data)
+    list_form.fields['board'].queryset = Board.objects.filter(user=request.user)
+    list_form.fields['user'].queryset = User.objects.filter(id = request.user.id)
     if request.method == 'POST':
         list_form = ListForm(request.POST)
         if list_form.is_valid():
             list_form.save()
             return redirect("kanban")
 
+
     context = {
-        'list_form': ListForm()
+        'list_form': list_form,
     }
+
     return render(request, "add_list.html", context)

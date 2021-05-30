@@ -28,7 +28,7 @@ class List(models.Model):
         verbose_name = 'List'
         verbose_name_plural = 'Lists'
 
-
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     title = models.CharField(max_length=100, null=False, blank=False)
     board = models.ForeignKey(Board, on_delete=models.CASCADE)
     is_active = models.BooleanField(default=True)
@@ -44,7 +44,7 @@ class Card(models.Model):
         verbose_name = 'card'
         verbose_name_plural = 'cards'
 
-
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     list = models.ForeignKey(List, on_delete=models.CASCADE, verbose_name='List')
     is_active = models.BooleanField(default=True)
     title = models.CharField(max_length=100, null=False, blank=False)
@@ -63,7 +63,7 @@ class Comment(models.Model):
         verbose_name = 'comment'
         verbose_name_plural = 'comments'
 
-
+    user = models.ForeignKey(User, on_delete=models.CASCADE, null=True)
     card = models.ForeignKey(Card, on_delete=models.CASCADE)
     created = models.DateTimeField(auto_now_add=True)
     text = models.TextField(null=False, blank=False)

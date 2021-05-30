@@ -12,9 +12,9 @@ class CustomUserCreationForm(UserCreationForm):
 class CardForm(forms.ModelForm):
     class Meta:
         model = Card
-        exclude = ['user']
-
+        
         fields = [
+            
             'list',
             'title',
             'description'
@@ -24,11 +24,9 @@ class CardForm(forms.ModelForm):
 class ListForm(forms.ModelForm):
     class Meta:
         model = List
-        fields = [
-            
-            'title',
-            'board',
-        ]
+        fields = ['user', 'title', 'board']
+
+
 
 
 class BoardForm(forms.ModelForm):
