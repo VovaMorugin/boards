@@ -1,5 +1,26 @@
-<h1>{{current_card.title}}</h1>
-<h2>{{current_card.description}}</h2>
-{%for comment in comments %}
-<h3>{{comment.text}}</h3>
-{%endfor%}
+{%load static %}
+
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+
+    <title>{{current_card.title}}</title>
+</head>
+
+<body>
+
+    <div style="margin: 20px">
+        <h1>{{current_card.title}}</h1>
+
+        <p>{{current_card.description}}</p>
+        <a href="/kanban/" type="button" class="btn btn-primary">Back to the list</a>
+    </div>
+
+</body>
+
+</html>

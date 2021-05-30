@@ -37,12 +37,8 @@ def kanban(request):
     if not board:
         board = Board.objects.create(user=request.user, title="Board")
 
-
-
     card_form = CardForm(request.POST or None)
-    card_form.fields['list'].queryset = List.objects.filter(user = request.user)
-
-    
+    card_form.fields['list'].queryset = List.objects.filter(user=request.user)
 
     if request.method == 'POST':
         if card_form.is_valid():
@@ -91,6 +87,8 @@ def card_info(request, card_id):
 def card_update(request, card_id):
     current_card = Card.objects.get(id=card_id)
     update_form = CardForm(instance=current_card)
+    update_form.fields['list'].queryset = List.objects.filter(
+        user=request.user)
     if request.method == 'POST':
         update_form = CardForm(request.POST, instance=current_card)
         if update_form.is_valid():
@@ -107,17 +105,17 @@ def card_update(request, card_id):
 def add_list(request):
 
     initial_data = {
-        'user':request.user,
+        'user': request.user,
     }
     list_form = ListForm(request.POST or None, initial=initial_data)
-    list_form.fields['board'].queryset = Board.objects.filter(user=request.user)
-    list_form.fields['user'].queryset = User.objects.filter(id = request.user.id)
+    list_form.fields['board'].queryset = Board.objects.filter(
+        user=request.user)
+    list_form.fields['user'].queryset = User.objects.filter(id=request.user.id)
     if request.method == 'POST':
         list_form = ListForm(request.POST)
         if list_form.is_valid():
             list_form.save()
             return redirect("kanban")
-
 
     context = {
         'list_form': list_form,
