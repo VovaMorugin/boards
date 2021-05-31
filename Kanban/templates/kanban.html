@@ -19,10 +19,13 @@
 </head>
 
 <body>
-    <a href="{% url 'logout' %}">Log Out</a>
+    <div style="position: absolute; top: 0; right: 0; width: 100px; text-align:right;">
+        <a class="boards-btn btn" href="{% url 'logout' %}">Log Out</a>
+      </div>
+   
     <section class="board-info-bar">
         <div class="boards-menu">
- 
+            
             <a class="boards-btn btn" href="/add_list/">
                 <i class="fab fa-trello boards-btn-icon">
                 </i> Add List
@@ -31,7 +34,7 @@
                 <i class="fab fa-trello boards-btn-icon">
                 </i> Add Card
             </a>
-
+           
         </div>
     </section>
 
