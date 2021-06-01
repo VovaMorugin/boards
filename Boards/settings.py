@@ -92,7 +92,7 @@ db_pass = str(os.getenv('db_pass'))
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': 'db.sqlite3'
+        'NAME': 'db'
     }
 }
 
