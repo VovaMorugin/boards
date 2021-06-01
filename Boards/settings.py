@@ -142,3 +142,8 @@ STATIC_URL = '/static/'
 
 LOGIN_REDIRECT_URL = "kanban"
 LOGOUT_REDIRECT_URL = "kanban"
+STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+
+STATICFILES_DIRS = (
+    os.path.join(BASE_DIR, 'static'),
+)
