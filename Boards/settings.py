@@ -16,7 +16,7 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-ALLOWED_HOSTS ='*'
+ALLOWED_HOSTS = '*'
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
@@ -26,9 +26,6 @@ SECRET_KEY = str(os.getenv('SECRET_KEY'))
 
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
-
-
-
 
 
 # Application definition
@@ -79,7 +76,7 @@ WSGI_APPLICATION = 'Boards.wsgi.application'
 # Database
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
-db_pass= str(os.getenv('db_pass'))
+db_pass = str(os.getenv('db_pass'))
 # DATABASES = {
 #     'default': {
 #         'ENGINE': 'django.db.backends.mysql',
@@ -95,7 +92,7 @@ db_pass= str(os.getenv('db_pass'))
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.sqlite3',
-        'NAME': '/Users/moruhin/Desktop/Python/Boards/Boards/db.sqlite3'
+        'NAME': 'db.sqlite3'
     }
 }
 
@@ -142,5 +139,8 @@ STATIC_URL = '/static/'
 
 LOGIN_REDIRECT_URL = "kanban"
 LOGOUT_REDIRECT_URL = "kanban"
-STATIC_ROOT = os.path.join(BASE_DIR, 'staticfiles')
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
+STATICFILES_DIRS = (
+    BASE_DIR / "static",
+)
