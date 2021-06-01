@@ -16,7 +16,7 @@ from pathlib import Path
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
 
-ALLOWED_HOSTS = ['vladimir-boards.herokuapp.com', '127.0.0.1'],
+ALLOWED_HOSTS ='*'
 
 # Quick-start development settings - unsuitable for production
 # See https://docs.djangoproject.com/en/3.1/howto/deployment/checklist/
@@ -25,7 +25,7 @@ load_dotenv()
 SECRET_KEY = str(os.getenv('SECRET_KEY'))
 
 # SECURITY WARNING: don't run with debug turned on in production!
-DEBUG = False
+DEBUG = True
 
 
 
@@ -80,17 +80,27 @@ WSGI_APPLICATION = 'Boards.wsgi.application'
 # https://docs.djangoproject.com/en/3.1/ref/settings/#databases
 
 db_pass= str(os.getenv('db_pass'))
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'boards',
+#         'USER': 'boards_user',
+#         'PASSWORD': db_pass,
+#         'HOST': 'localhost',
+#         'PORT': '3306',
+#     }
+# }
+
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'boards',
-        'USER': 'boards_user',
-        'PASSWORD': db_pass,
-        'HOST': 'localhost',
-        'PORT': '3306',
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': '/Users/moruhin/Desktop/Python/Boards/Boards/db.sqlite3'
     }
 }
 
+# DATABASE_ENGINE =  'django.db.backends.sqlite3'
+# DATABASE_NAME = '/Users/moruhin/Desktop/Python/Boards/Boards/db.sqlite3'
 
 # Password validation
 # https://docs.djangoproject.com/en/3.1/ref/settings/#auth-password-validators
@@ -129,6 +139,6 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/3.1/howto/static-files/
 
 STATIC_URL = '/static/'
-STATIC_ROOT = BASE_DIR / 'staticfiles'
+
 LOGIN_REDIRECT_URL = "kanban"
 LOGOUT_REDIRECT_URL = "kanban"
