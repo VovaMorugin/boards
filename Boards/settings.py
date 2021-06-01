@@ -141,6 +141,3 @@ LOGIN_REDIRECT_URL = "kanban"
 LOGOUT_REDIRECT_URL = "kanban"
 STATIC_ROOT = BASE_DIR / 'staticfiles'
 
-STATICFILES_DIRS = (
-    BASE_DIR / "static",
-)
