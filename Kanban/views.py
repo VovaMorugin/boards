@@ -1,8 +1,10 @@
+from Kanban.serializers import BoardSerializer
 from django.contrib.auth import login
 from django.shortcuts import redirect, render
 from Kanban.forms import CustomUserCreationForm
 from .models import *
 from .forms import CardForm, BoardForm, ListForm
+from rest_framework import generics
 
 
 def register(request):
@@ -122,3 +124,9 @@ def add_list(request):
     }
 
     return render(request, "add_list.html", context)
+
+
+class BoardList(generics.ListAPIView):
+
+    serializer_class = BoardSerializer
+    queryset = Board.objects.all()
