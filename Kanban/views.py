@@ -1,4 +1,4 @@
-from Kanban.serializers import BoardSerializer
+from Kanban.serializers import BoardSerializer, CardSerializer
 from django.contrib.auth import login
 from django.shortcuts import redirect, render
 from Kanban.forms import CustomUserCreationForm
@@ -130,3 +130,8 @@ class BoardList(generics.ListAPIView):
 
     serializer_class = BoardSerializer
     queryset = Board.objects.all()
+
+class CardList(generics.ListAPIView):
+
+    serializer_class = CardSerializer
+    queryset = Card.objects.all()

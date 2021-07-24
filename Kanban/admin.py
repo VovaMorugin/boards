@@ -12,7 +12,7 @@ class ListAdmin(admin.ModelAdmin):
 
 
 class CardAdmin(admin.ModelAdmin):
-    list_display = ('id', 'title', 'list', 'is_active', 'created',  'due_day')
+    list_display = ('id', 'title', 'list', 'is_active', 'created')
 
 class CommentAdmin(admin.ModelAdmin):
     list_display = ('id', 'card', 'text', 'created')
