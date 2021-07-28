@@ -124,10 +124,3 @@ def add_list(request):
     }
 
     return render(request, "add_list.html", context)
-
-
-
-class CardList(generics.ListAPIView):
-
-    serializer_class = CardSerializer
-    queryset = Card.objects.all()

@@ -1,5 +1,5 @@
 from django.shortcuts import redirect
-from Kanban.views import register, main, kanban, card_info, card_update, add_list, CardList
+from Kanban.views import register, main, kanban, card_info, card_update, add_list
 from django.urls import path
 # from .views import register, login, reset, forgot
 urlpatterns = [
@@ -10,8 +10,5 @@ urlpatterns = [
     path('card_update/<int:card_id>', card_update),
     path('card_update/', main),
     path('add_list/', add_list),
-
-    path('cards/', CardList.as_view())
-
 
 ]
