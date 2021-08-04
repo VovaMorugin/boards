@@ -1,7 +1,7 @@
 from django.shortcuts import redirect
 from Kanban.views import register, main, kanban, card_info, card_update, add_list
 from django.urls import path
-# from .views import register, login, reset, forgot
+
 urlpatterns = [
     path('', main),
     path('register/', register, name='register'),

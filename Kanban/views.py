@@ -1,10 +1,9 @@
-from Kanban.serializers import BoardSerializer, CardSerializer
 from django.contrib.auth import login
 from django.shortcuts import redirect, render
 from Kanban.forms import CustomUserCreationForm
 from .models import *
 from .forms import CardForm, BoardForm, ListForm
-from rest_framework import generics
+
 
 
 def register(request):
