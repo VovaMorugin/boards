@@ -1,4 +1,4 @@
-<h2>The Boards is a kanban-style personal project management tool. </h1>
+<h2>The Boards is a kanban inspired personal projects management tool.</h1>
 
 https://vladimir-boards.herokuapp.com/
 
